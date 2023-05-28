@@ -1,7 +1,7 @@
 .dialog {
   display: flex;
   height: 100%;
-  width: 500px;
+  width: 400px;
   flex-direction: column;
   gap: 2px;
 }
@@ -16,7 +16,7 @@
   gap: 10px;
   overflow-y: scroll;
   position: relative;
-  min-height: 600px;
+  max-height: 300px;
 }
 
 .dialog_input {

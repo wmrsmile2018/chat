@@ -14,12 +14,13 @@ export const getSuggestionAnswerFx = createEffect(
     const response = await openaiApi.createChatCompletion({
       model: 'gpt-3.5-turbo',
       temperature: 0,
+      n: 2,
       messages: [
-        {
-          role: 'system',
-          content:
-            'always offer several answers, how you can answer the message',
-        },
+        // {
+        //   role: 'system',
+        //   content:
+        //     'always offer several answers, how you can answer the message',
+        // },
         {
           role: 'user',
           content: message,
