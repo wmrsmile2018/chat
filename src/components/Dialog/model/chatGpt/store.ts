@@ -1,4 +1,4 @@
-import { createEffect, createEvent } from 'effector';
+import { createEffect } from 'effector';
 import { createStore } from 'effector';
 import { Configuration, OpenAIApi } from 'openai';
 
@@ -6,7 +6,7 @@ export const getSuggestionAnswerFx = createEffect(
   async (params: { message: string; id: string }) => {
     const { id, message } = params;
     const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: process.env.REACT_APP_API_KEY,
     });
 
     const openaiApi = new OpenAIApi(configuration);

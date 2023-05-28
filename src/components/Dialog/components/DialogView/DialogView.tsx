@@ -53,7 +53,7 @@ export const DialogView: FC<DialogViewProps> = memo(
             send
           </Button>
         </div>
-        {idOwner !== suggestions.id && (
+        {'2' === suggestions.id && (
           <div className='dialog_suggestion'>
             {suggestions.suggestions.map((suggest) => {
               return (
