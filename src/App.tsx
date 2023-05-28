@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Dialog } from './components/Dialog';
+import { useEvent, useStore } from 'effector-react';
+import { $chat, sendMessage } from './model/chatGpt/store';
+// import { $chat, fetchFx } from './model/chatGpt/store';
+// import { useEvent, useStore } from 'effector-react';
 
 function App() {
+  // const fetch = useEvent(fetchFx);
+  // const chat = useStore($chat);
+  const send = useEvent(sendMessage);
+  const history = useStore($chat);
+
+  // useEffect(() => {
+  //   fetch([{ content: 'hello', role: 'user' }]);
+  // }, [fetch]);
+  // useEffect(() => {
+  //   console.log('chat', chat);
+  // }, [chat]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Dialog history={history} sendMessage={send} idOwner='1' />
+      <Dialog history={history} sendMessage={send} idOwner='2' />
     </div>
   );
 }

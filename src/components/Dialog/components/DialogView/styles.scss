@@ -1,0 +1,59 @@
+.dialog {
+  display: flex;
+  height: 100%;
+  width: 500px;
+  flex-direction: column;
+  gap: 2px;
+}
+.dialog_messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border: 1px solid rgb(82, 130, 242);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #5282f23b;
+  gap: 10px;
+  overflow-y: scroll;
+  position: relative;
+  min-height: 600px;
+}
+
+.dialog_input {
+  display: flex;
+  align-items: flex-end;
+  // position: absolute;
+  // bottom: 0;
+  flex: 0;
+  // flex-direction: column;
+}
+
+.dialog_message {
+  padding: 8px 10px;
+  border-radius: 8px;
+  display: flex;
+  max-width: 80%;
+  width: fit-content;
+  background: #fff;
+  &.owner {
+    align-self: flex-end;
+    justify-content: flex-end;
+    background: #1c9bff;
+    color: white;
+  }
+}
+
+.dialog_suggestion {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  gap: 10px;
+  & > div {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+  }
+}
