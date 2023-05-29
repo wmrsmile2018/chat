@@ -3,8 +3,8 @@ import { createStore } from 'effector';
 import { Configuration, OpenAIApi } from 'openai';
 
 export const getSuggestionAnswerFx = createEffect(
-  async (params: { message: string; id: string }) => {
-    const { id, message } = params;
+  async (params: { message: string; id: string; systemMessage: string }) => {
+    const { id, message, systemMessage } = params;
     const configuration = new Configuration({
       apiKey: process.env.REACT_APP_API_KEY,
     });
@@ -16,11 +16,7 @@ export const getSuggestionAnswerFx = createEffect(
       temperature: 0,
       n: 2,
       messages: [
-        // {
-        //   role: 'system',
-        //   content:
-        //     'always offer several answers, how you can answer the message',
-        // },
+        { role: 'system', content: systemMessage },
         {
           role: 'user',
           content: message,
@@ -28,21 +24,15 @@ export const getSuggestionAnswerFx = createEffect(
       ],
     });
 
-    console.log(
-      'response.data?.choices[0].message?.content',
-      response.data?.choices[0].message?.content
-    );
-
     return {
-      response: (response.data?.choices[0].message?.content ?? '')
-        .split(/\d+\.\s*/)
-        .slice(1),
+      response:
+        response.data?.choices.map((choice) => choice.message?.content ?? '') ??
+        [],
       id,
     };
   }
 );
 
-//@ts-ignore
 export const $suggestion = createStore<{
   isLoading: boolean;
   suggestions: string[];

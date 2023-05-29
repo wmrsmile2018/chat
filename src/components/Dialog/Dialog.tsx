@@ -21,11 +21,15 @@ export type DialogProps = {
     text: string;
   };
   idOwner: string;
+  showSuggestions: boolean;
 };
 
 export const Dialog: FC<DialogProps> = memo(
-  ({ history, sendMessage, idOwner }) => {
+  ({ history, sendMessage, idOwner, showSuggestions }) => {
     const [text, setText] = useState('');
+    const [system, setSystem] = useState(
+      'always offer several answers, how you can answer the message'
+    );
     const suggestions = useStore($suggestion);
     const getSuggest = useEvent(getSuggestionAnswerFx);
 
@@ -36,16 +40,21 @@ export const Dialog: FC<DialogProps> = memo(
       []
     );
 
-    const chooseSuggest = (value: string) => {
+    const chooseSuggest = useCallback((value: string) => {
       setText(value);
-    };
+    }, []);
 
     const onSubmit: MouseEventHandler<HTMLAnchorElement> &
       MouseEventHandler<HTMLButtonElement> = useCallback(() => {
-      getSuggest({ message: text, id: idOwner });
+      getSuggest({ message: text, id: idOwner, systemMessage: system });
       sendMessage({ text, id: idOwner });
       setText('');
-    }, [getSuggest, idOwner, sendMessage, text]);
+    }, [getSuggest, idOwner, sendMessage, system, text]);
+
+    const setSystemMessage: ChangeEventHandler<HTMLTextAreaElement> =
+      useCallback(({ target }) => {
+        setSystem(target.value);
+      }, []);
 
     return (
       <DialogView
@@ -56,6 +65,9 @@ export const Dialog: FC<DialogProps> = memo(
         idOwner={idOwner}
         suggestions={suggestions}
         chooseSuggest={chooseSuggest}
+        showSuggestions={showSuggestions}
+        setSystemMessage={setSystemMessage}
+        systemMessage={system}
       />
     );
   }

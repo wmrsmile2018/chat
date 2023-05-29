@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Dialog } from './components/Dialog';
 import { useEvent, useStore } from 'effector-react';
-import { $chat, sendMessage } from './model/chatGpt/store';
+import { $chat, sendMessage } from './model/chatPingPong/store';
 // import { $chat, fetchFx } from './model/chatGpt/store';
 // import { useEvent, useStore } from 'effector-react';
 
@@ -21,8 +21,18 @@ function App() {
 
   return (
     <div className='App'>
-      <Dialog history={history} sendMessage={send} idOwner='1' />
-      <Dialog history={history} sendMessage={send} idOwner='2' />
+      <Dialog
+        history={history}
+        sendMessage={send}
+        idOwner='1'
+        showSuggestions={false}
+      />
+      <Dialog
+        history={history}
+        sendMessage={send}
+        idOwner='2'
+        showSuggestions={true}
+      />
     </div>
   );
 }

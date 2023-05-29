@@ -18,6 +18,9 @@ export type DialogViewProps = {
     id: string;
   };
   chooseSuggest: (value: string) => void;
+  showSuggestions: boolean;
+  setSystemMessage: React.ChangeEventHandler<HTMLTextAreaElement>;
+  systemMessage: string;
 };
 export const DialogView: FC<DialogViewProps> = memo(
   ({
@@ -28,9 +31,21 @@ export const DialogView: FC<DialogViewProps> = memo(
     idOwner,
     suggestions,
     chooseSuggest,
+    showSuggestions,
+    setSystemMessage,
+    systemMessage,
   }) => {
     return (
       <div className='dialog'>
+        {showSuggestions && (
+          <div className='dialog_system_message'>
+            <Input.TextArea
+              autoSize={{ minRows: 1, maxRows: 10 }}
+              onChange={setSystemMessage}
+              value={systemMessage}
+            />
+          </div>
+        )}
         <div className='dialog_messages'>
           {messages.map((message, i) => {
             const className = `dialog_message ${
@@ -53,13 +68,14 @@ export const DialogView: FC<DialogViewProps> = memo(
             send
           </Button>
         </div>
-        {'2' === suggestions.id && (
+        {showSuggestions && suggestions.id !== idOwner && (
           <div className='dialog_suggestion'>
-            {suggestions.suggestions.map((suggest) => {
+            {suggestions.suggestions.map((suggest, i) => {
               return (
                 <div
                   className='dialog_suggest'
                   onClick={() => chooseSuggest(suggest)}
+                  key={i}
                 >
                   {suggest}
                 </div>
